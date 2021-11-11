@@ -11,19 +11,18 @@ const bull = (
         component="span"
         sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
     >
-        •
     </Box>
 );
 
-export default function BasicCard({tipo}) {
+const ProductCard = ({tipe}) => {
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275, maxWidth: 300, marginTop: 3}}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Proveniente de:
                 </Typography>
                 <Typography variant="h5" component="div">
-                    {tipo}
+                    {tipe}
                 </Typography>            
             </CardContent>
             <CardActions>
@@ -33,3 +32,4 @@ export default function BasicCard({tipo}) {
     );
 }
 
+export default ProductCard

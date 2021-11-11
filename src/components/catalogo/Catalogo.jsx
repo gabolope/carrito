@@ -1,24 +1,25 @@
 import  { Component } from 'react';
-import Title from './title/Title';
-import Item from './item/Item';
+import ProductCard from './ProductCard';
 
 class Catalogo extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            name: "Coffee Queen",
             coffeeTypes: ['Colombia', 'Brasil', 'México'],
          }
     }
+
     render() { 
         const items = this.state.coffeeTypes.map (t => (
-            <Item tipo={ t }/>
+            <ProductCard tipe={ t }/>
         ));
         return ( 
-            <div>
-                <Title name={this.state.name}/>
-            <ul>{items}</ul>
-            </div>
+            <>
+                <div>
+                    <h2>Tipos de Café disponibles:</h2>
+                    <ul>{items}</ul>
+                </div>
+            </>
          );
     }
 }
