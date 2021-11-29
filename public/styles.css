@@ -1,0 +1,15 @@
+.itemDetail{
+    border: #374045 1px solid;
+    border-radius: 3px;
+    width: 80vw;
+    margin: auto;
+}
+
+.itemDetailTittle{
+    color: #E1D89F;
+    background-color: #374045;
+}
+
+.itemDetailName{
+    color: #D89216;
+}
