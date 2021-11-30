@@ -38,8 +38,8 @@ const NavBar = ({pageName, categories}) => {
           </Link>
           {categories.map(category => {
             return(
-              <Link to={`${category.path}`}>
-                <Button variant="text" color="inherit" key={category.id}>{category.name}</Button>
+              <Link key={category.id} to={`${category.path}`}>
+                <Button variant="text" color="inherit" >{category.name}</Button>
               </Link>
             )
           })}

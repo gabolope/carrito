@@ -1,12 +1,9 @@
-import Card from '@mui/material/Card';
 import { Typography, CardMedia } from '@mui/material';
+import Card from '@mui/material/Card';
+import ItemCount from './ItemCount';
 
 const ItemDetail = ({product}) => {
-    if(!product){
-        return null
-    }
-
-    return (
+   return (
         <>
         <Card sx={{ maxWidth: 900, margin: "auto"}}>
             <h2 className="itemDetailTittle">Detalles del Producto</h2>
@@ -16,6 +13,7 @@ const ItemDetail = ({product}) => {
                 image={product.image}
                 alt={product.name}
             />
+            <h4>{product.category}</h4>
             <Typography 
                 variant="body1" 
                 color="text.primary"
@@ -29,8 +27,9 @@ const ItemDetail = ({product}) => {
                 color="text.secondary"
                 align="center"
             >
-                {product.preparation}
-            </Typography>
+                Preparación: {product.preparation}
+            </Typography>              
+            <ItemCount stock={5} initial={1}/>       
         </Card>
         </>
     )

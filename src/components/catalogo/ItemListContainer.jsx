@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import ItemCount from './ItemCount';
 /* import getProducts from '../../services/handmadePromise'; */
 import ItemList from './ItemList';
 import axios from 'axios';
@@ -7,15 +6,7 @@ import axios from 'axios';
 const ItemListContainer = ( {greeting} ) => {
    const [products, setProducts] = useState([]) //Crea la variable productos, asignándole un array vacío. Luego, cuando la promesa se cumple este array se llena con el array de data.
    
-   //función que paso por props al hijo ItemCount:
-   const onAdd = (count) => {
-       const message1 = `Se agregó ${count} producto al carrito.`;
-       const message2 = `Se agregaron ${count} productos al carrito.`;
-       (count === 1) ? alert(message1) : alert(message2);
-   } 
-
-
-
+   
     /*ACÁ TRAJE LOS DATOS DESDE UN ARRAY QUE SE ENCUENTRA EN EL ARCHIVO "handmadePromise.js", EN EL CUAL DEFINO UNA PROMESA */
     /* useEffect(() => {
         getProducts
@@ -70,7 +61,6 @@ const ItemListContainer = ( {greeting} ) => {
 
     return (
         <>
-            <ItemCount stock={5} initial={1} onAdd={onAdd}/>
             <ItemList products={products}/>
         </>
     )
