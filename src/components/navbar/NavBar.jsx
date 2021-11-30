@@ -1,16 +1,20 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import CartWidget from './CartWidget'
+import CartWidget from './CartWidget';
+import Button from '@mui/material/Button';
 
-const NavBar = ({pageName}) => {
+const NavBar = ({pageName, categories}) => {
   return (
-    <Box sx={{ 
-      flexGrow: 1}}>
+    <Box 
+      sx={{ 
+        flexGrow: 1
+      }}>
       <AppBar position="static">
         <Toolbar >
           <IconButton
@@ -22,9 +26,23 @@ const NavBar = ({pageName}) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {pageName}
-          </Typography>
+          <Link to="/">
+            <Typography 
+              variant="h5" 
+              component="div" 
+              sx={{ 
+                flexGrow: 1 
+                }}>
+                {pageName}
+            </Typography>
+          </Link>
+          {categories.map(category => {
+            return(
+              <Link to={`${category.path}`}>
+                <Button variant="text" color="inherit" key={category.id}>{category.name}</Button>
+              </Link>
+            )
+          })}
           <CartWidget/>
         </Toolbar>
       </AppBar>

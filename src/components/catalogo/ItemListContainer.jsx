@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import ItemCount from './ItemCount';
 /* import getProducts from '../../services/handmadePromise'; */
 import ItemList from './ItemList';
-import ItemDetailContainer from './ItemDetailContainer';
 import axios from 'axios';
 
 const ItemListContainer = ( {greeting} ) => {
@@ -69,17 +68,10 @@ const ItemListContainer = ( {greeting} ) => {
     }, []) 
 
 
-
-
     return (
         <>
-            <div className="heroImage">
-                <h4>Este es el saludo para el cliente:</h4>
-                <h3>{greeting}</h3>
-            </div>
             <ItemCount stock={5} initial={1} onAdd={onAdd}/>
             <ItemList products={products}/>
-            <ItemDetailContainer />
         </>
     )
 }
