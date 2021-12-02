@@ -43,7 +43,9 @@ const NavBar = ({pageName, categories}) => {
               </Link>
             )
           })}
-          <CartWidget/>
+          <Link to="/Cart">
+            <CartWidget/>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

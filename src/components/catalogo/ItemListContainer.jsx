@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 /* import getProducts from '../../services/handmadePromise'; */
 import ItemList from './ItemList';
 import axios from 'axios';
+import Loader from '../Loader'
 
 const ItemListContainer = ( {greeting} ) => {
    const [products, setProducts] = useState([]) //Crea la variable productos, asignándole un array vacío. Luego, cuando la promesa se cumple este array se llena con el array de data.
@@ -51,13 +52,23 @@ const ItemListContainer = ( {greeting} ) => {
     const getProductAxios = async() => {
         const getAxios = await axios.get("../JSON/DataList.json");  //se invoca a axios y se designa el verbo que se quiere utilizar, en este caso un get para acceder al json
         const responseAxios = getAxios.data;                        //axios facilita el acceso a los datos, no se necesita utilizar el método json()
-        setProducts(responseAxios)
+        setProducts(responseAxios);
+        setLoading(false)
     }
     
     useEffect(() => {
         setTimeout(() => getProductAxios(), 2000)
     }, []) 
 
+    const [loading, setLoading] = useState(true)
+
+    if(loading){
+        return (
+        <>
+        <Loader/>
+        </>
+        )
+    }
 
     return (
         <>

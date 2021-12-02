@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
@@ -9,10 +9,16 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import { CartContext } from '../../contexts/CartContext'
 
-const ItemCount = ({ stock, initial }) => {
+
+const ItemCount = ({ stock, initial, id }) => {
     
     const [count, setCount] = useState(initial); //Este hook establece el valor inicial del contador y la función que cambiará el valor del contador
+
+    const {cart, setCart} = useContext(CartContext);
+
+    const [counter, setCounter] = useState(0);
 
     const addItem = () => { 
         if (count < stock){
@@ -28,15 +34,19 @@ const ItemCount = ({ stock, initial }) => {
 
     const [showItemCount, setShowItemCount] = useState(true)
 
-    //función que paso por props al hijo ItemCount:
+    //función que muestra cuántos productos se agregaron, hace desaparecer el contador y actualiza el cart
     const onAdd = (count) => {
         const message1 = `Se agregó ${count} producto al carrito.`;
         const message2 = `Se agregaron ${count} productos al carrito.`;
         (count === 1) ? console.log(message1) : console.log(message2);
-        console.log("soy count", count)
-        setShowItemCount(false)
+        setShowItemCount(false);
+        setCounter(count);
+        setCart([...cart, {cantidad: counter, data: id}]); 
+
+        
     }
     
+    //función que hace aparecer el contador
     const deleteCounter = () =>{
         setShowItemCount(true)
     }
@@ -79,14 +89,16 @@ const ItemCount = ({ stock, initial }) => {
                         <Button 
                             variant="contained" 
                             endIcon={<ShoppingCartIcon/>}
-
                         >
                             Ver carrito
                         </Button>   
                     </Link>
                 </Stack>
+                <h1>Número de productos en el carrito: {cart}</h1>
             </div>
-            }
+            };
+            <h1>Counter: {counter}</h1>
+
         </>
     )
 }

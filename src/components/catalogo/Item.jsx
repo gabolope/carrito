@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 
-const Item = ({id, name, description, category, image}) => {
+const Item = ({id, name, price, category, image}) => {
     return (
         <Link to={`/item/${id}`}>
             <Card sx={{ 
@@ -27,8 +27,8 @@ const Item = ({id, name, description, category, image}) => {
                     alt={name}
                 />
                 <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                    {description}
+                    <Typography variant="h6" color="text.primary">
+                    Precio: ${price}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

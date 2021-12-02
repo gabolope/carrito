@@ -14,6 +14,8 @@ const ItemDetail = ({product}) => {
                 alt={product.name}
             />
             <h4>{product.category}</h4>
+            <h3>$ {product.price}</h3>
+            <h5>Stock disponible: {product.stock}</h5>
             <Typography 
                 variant="body1" 
                 color="text.primary"
@@ -29,7 +31,7 @@ const ItemDetail = ({product}) => {
             >
                 Preparación: {product.preparation}
             </Typography>              
-            <ItemCount stock={5} initial={1}/>       
+            <ItemCount stock={product.stock} initial={1} id={product.id}/>       
         </Card>
         </>
     )

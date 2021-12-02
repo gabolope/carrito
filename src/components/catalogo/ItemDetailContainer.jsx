@@ -4,6 +4,7 @@ import ItemDetail from "./ItemDetail";
 import getProducts from '../../services/handmadePromise';
 
 
+
 const ItemDetailContainer = () => {    
     const [item, setItem] = useState({})
     
@@ -12,8 +13,10 @@ const ItemDetailContainer = () => {
     useEffect(() => {
         getProducts.then((res) => {
             setItem(res.find((prod) => prod.id === parseInt(id)))
-        });
+        })
+        ;
     },[id])
+
 
     return(
         <>
