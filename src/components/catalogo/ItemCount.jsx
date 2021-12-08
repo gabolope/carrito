@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
@@ -12,16 +12,17 @@ import Button from '@mui/material/Button';
 import { CartContext } from '../../contexts/CartContext'
 
 
-const ItemCount = ({ stock, initial, id }) => {
+const ItemCount = ({ product, initial }) => {
     
     const [count, setCount] = useState(initial); //Este hook establece el valor inicial del contador y la función que cambiará el valor del contador
 
-    const {cart, setCart} = useContext(CartContext);
+    const {cart, counter, setCounter, onAdd, showItemCount, deleteCounter} = useContext(CartContext); //Este hook toma los elementos del Context
+    console.log("Cart inicial:", cart)
 
-    const [counter, setCounter] = useState(0);
+    /* const [counter, setCounter] = useState([]); */
 
     const addItem = () => { 
-        if (count < stock){
+        if (count < product.stock){
             setCount(count + 1)
         } //Suma uno al contador
     }
@@ -32,24 +33,31 @@ const ItemCount = ({ stock, initial, id }) => {
         }
     } //Resta uno al contador
 
-    const [showItemCount, setShowItemCount] = useState(true)
+    /* const [showItemCount, setShowItemCount] = useState(true) */
 
     //función que muestra cuántos productos se agregaron, hace desaparecer el contador y actualiza el cart
-    const onAdd = (count) => {
+    /* const onAdd = (count) => {
         const message1 = `Se agregó ${count} producto al carrito.`;
         const message2 = `Se agregaron ${count} productos al carrito.`;
         (count === 1) ? console.log(message1) : console.log(message2);
-        setShowItemCount(false);
-        setCounter(count);
-        setCart([...cart, {cantidad: counter, data: id}]); 
 
-        
-    }
+        setShowItemCount(false); //oculta los botones del contador
+
+        setCounter([{"quantity": count, "product": "id de prueba"}])
+        console.log("Counter luego de ejecutar onAdd:", counter) 
+        console.log("Cart luego de ejecutar onAdd:", cart) 
+    } */
+    
+    
+    /* useEffect( () => {
+        console.log("Counter en el useEffect: ", counter)
+        setCart([{"quantity": counter, "product": "id de prueba"}])
+    },[counter]) */
     
     //función que hace aparecer el contador
-    const deleteCounter = () =>{
+    /* const deleteCounter = () =>{
         setShowItemCount(true)
-    }
+    } */
 
     return (
         <>
@@ -69,7 +77,7 @@ const ItemCount = ({ stock, initial, id }) => {
                 <Button 
                     variant="contained" 
                     endIcon={<AddShoppingCartIcon/>}
-                    onClick={() => onAdd(count)}
+                    onClick={() => onAdd(product, count)}
                 >
                     Agregar al carrito
                 </Button>               
@@ -97,7 +105,6 @@ const ItemCount = ({ stock, initial, id }) => {
                 <h1>Número de productos en el carrito: {cart}</h1>
             </div>
             };
-            <h1>Counter: {counter}</h1>
 
         </>
     )

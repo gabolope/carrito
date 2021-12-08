@@ -3,8 +3,8 @@ import { CartContext } from '../contexts/CartContext';
 
 const Cart = () => {
     
-    const cart = useContext(CartContext);
-    console.log(cart)
+    const {cart} = useContext(CartContext);
+    console.log("Soy el cart", cart)
 
     return(
         <>

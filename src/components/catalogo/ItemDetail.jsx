@@ -31,7 +31,7 @@ const ItemDetail = ({product}) => {
             >
                 Preparación: {product.preparation}
             </Typography>              
-            <ItemCount stock={product.stock} initial={1} id={product.id}/>       
+            <ItemCount product={product} initial={1}/>       
         </Card>
         </>
     )
