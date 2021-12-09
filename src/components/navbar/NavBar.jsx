@@ -15,14 +15,18 @@ const NavBar = ({pageName, categories}) => {
       sx={{ 
         flexGrow: 1
       }}>
-      <AppBar position="static">
+      <AppBar position="static"
+        sx={{
+          backgroundColor: "#2C061F"
+        }}
+      >
         <Toolbar >
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2}}
           >
             <MenuIcon />
           </IconButton>
@@ -31,7 +35,11 @@ const NavBar = ({pageName, categories}) => {
               variant="h5" 
               component="div" 
               sx={{ 
-                flexGrow: 1 
+                flexGrow: 1, 
+                fontFamily: 'Comforter',
+                letterSpacing: 4, 
+                fontWeight: 500,
+                color: "#D89216"
                 }}>
                 {pageName}
             </Typography>

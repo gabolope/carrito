@@ -9,6 +9,7 @@ const ItemList = ({products}) => {
                     {products.map(product => {
                         return(
                             <Item 
+                            product={product}
                             key={product.id}
                             id={product.id}
                             name={product.name}  
@@ -18,8 +19,8 @@ const ItemList = ({products}) => {
                             image={product.image}
                             price={product.price}
                             />
-                        )
-                    })}
+                            )
+                        })}
                 </Stack>
             </div>
         </>

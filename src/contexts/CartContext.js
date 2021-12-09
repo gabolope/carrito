@@ -3,48 +3,46 @@ import { useEffect, createContext, useState } from 'react'
 export const CartContext = createContext();
 
 export const CartProvider = ({children}) =>{
+    const [cart, setCart] = useState([]); //Establece el carrito como un array vacío
+    const [showCartIcon, setshowCartIcon] = useState(false) //Oculta y muestra los botones de compra
+    const [isCartEmpty, setIsCartEmpty] = useState(false) //Oculta y muestra el mensaje de "carrito vacío" en cart
+    const [cartLength, setCartLength] = useState (0) //Determina el largo de todos los productos en el carrito
 
-    const [cart, setCart] = useState([]);
-
-    const [counter, setCounter] = useState(0); 
-
-    const [showItemCount, setShowItemCount] = useState(true) //Oculta y muestra los botones de compra
-    
-    const item = "primera: tinka segunda: nikolino"
-
+    //Agrega al carrito
     const onAdd = (product, count) => {
-
-        /* const message1 = `Se agregó ${count} producto al carrito.`;
-        const message2 = `Se agregaron ${count} productos al carrito.`;
-        (count === 1) ? console.log(message1) : console.log(message2); */
-
-
-        setShowItemCount(false); //oculta los botones del contador 
+        setIsCartEmpty(false)
         
-        const productToAdd = {...product, quantity: count}
-        setCart([...cart, item])
-/* 
-        console.log("count es una variable de tipo: ", typeof(count))
-        console.log("El valor de count es: ", count)
-        
-        console.log("soy el item: ", item)
-        setCart([...cart, item])
+        const productInCart = cart.find((i) => i.id === product.id);
 
-        console.log("Counter luego de ejecutar onAdd:", counter) 
-        console.log("Cart luego de ejecutar onAdd:", cart)  */
+        if(!productInCart){
+            const productToAdd = {...product, quantity: count}
+            setCart([...cart, productToAdd])
+        }
+        else{productInCart.quantity = productInCart.quantity  + count}
+    }
+    
+    useEffect(() => {
+        if(cart.length > 0){
+            const quantities = cart.map((i) => i.quantity)
+            setCartLength(quantities.reduce((a, b) => a + b))
+            setshowCartIcon(true)     
+        }
+    },[onAdd])
+    
+    //Oculta el contador
+    const deleteCounter = () =>{
+        setshowCartIcon(true)
     }
 
-    /* useEffect( (counter) => {
-        console.log("Counter en el useEffect: ", counter)  
-        setCart([{"quantity": "counter", "product": "id de prueba"}]) 
-    },[counter]) */
-
-    const deleteCounter = () =>{
-        setShowItemCount(true)
+    //Vacía el carrito:
+    const emptyCart = () => { 
+        setCart([])
+        setCartLength(0)
+        setIsCartEmpty(true)
     }
 
     return (
-        <CartContext.Provider value={{cart, counter, onAdd, showItemCount, deleteCounter}}>
+        <CartContext.Provider value={{cart, onAdd, showCartIcon, deleteCounter, emptyCart, isCartEmpty, cartLength}}>
             {children}
         </CartContext.Provider>
     )

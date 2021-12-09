@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import ItemDetail from "./ItemDetail";
 import getProducts from '../../services/handmadePromise';
 
-
-
 const ItemDetailContainer = () => {    
     const [item, setItem] = useState({})
     

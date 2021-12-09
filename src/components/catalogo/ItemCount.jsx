@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
@@ -7,61 +7,41 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import { Badge } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { CartContext } from '../../contexts/CartContext'
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: -3,
+      top: 13,
+      border: `1px solid ${theme.palette.background.paper}`,
+      padding: '0 4px',
+    },
+  }));
 
 const ItemCount = ({ product, initial }) => {
     
     const [count, setCount] = useState(initial); //Este hook establece el valor inicial del contador y la función que cambiará el valor del contador
 
-    const {cart, counter, setCounter, onAdd, showItemCount, deleteCounter} = useContext(CartContext); //Este hook toma los elementos del Context
-    console.log("Cart inicial:", cart)
-
-    /* const [counter, setCounter] = useState([]); */
+    const { onAdd, showCartIcon, cartLength} = useContext(CartContext); //Este hook toma los elementos del Context
 
     const addItem = () => { 
         if (count < product.stock){
             setCount(count + 1)
         } //Suma uno al contador
     }
-
     const removeItem = () => {
         if (count > initial) {
             setCount(count - 1)
         }
     } //Resta uno al contador
 
-    /* const [showItemCount, setShowItemCount] = useState(true) */
-
-    //función que muestra cuántos productos se agregaron, hace desaparecer el contador y actualiza el cart
-    /* const onAdd = (count) => {
-        const message1 = `Se agregó ${count} producto al carrito.`;
-        const message2 = `Se agregaron ${count} productos al carrito.`;
-        (count === 1) ? console.log(message1) : console.log(message2);
-
-        setShowItemCount(false); //oculta los botones del contador
-
-        setCounter([{"quantity": count, "product": "id de prueba"}])
-        console.log("Counter luego de ejecutar onAdd:", counter) 
-        console.log("Cart luego de ejecutar onAdd:", cart) 
-    } */
-    
-    
-    /* useEffect( () => {
-        console.log("Counter en el useEffect: ", counter)
-        setCart([{"quantity": counter, "product": "id de prueba"}])
-    },[counter]) */
-    
-    //función que hace aparecer el contador
-    /* const deleteCounter = () =>{
-        setShowItemCount(true)
-    } */
 
     return (
         <>
-            {showItemCount ? 
+        <Stack direction="row" spacing={1}>
             <div className="itemCount"> 
                 <IconButton aria-label="Remove" onClick={removeItem}>
                     <RemoveIcon />
@@ -82,29 +62,29 @@ const ItemCount = ({ product, initial }) => {
                     Agregar al carrito
                 </Button>               
             </div>
-            : 
-            <div className="counter">
-                <Stack direction="row" spacing={1}>
-                    <Chip label={count} variant="outlined" />
-                    <Button 
+            {showCartIcon ? <div className="counter" color="error">
+                    {/* <Button 
                         variant="contained" 
                         endIcon={<DeleteIcon/>}
                         onClick={deleteCounter}
                     >
                         Eliminar compra
-                    </Button>
+                    </Button> */}
                     <Link to="/Cart">
-                        <Button 
-                            variant="contained" 
-                            endIcon={<ShoppingCartIcon/>}
-                        >
-                            Ver carrito
-                        </Button>   
+                            <Button 
+                                variant="contained" 
+                                endIcon={
+                                <StyledBadge badgeContent={cartLength} color="secondary">
+                                    <ShoppingCartIcon />
+                                </StyledBadge>}
+                            >
+                                Ver carrito
+                            </Button>   
                     </Link>
-                </Stack>
-                <h1>Número de productos en el carrito: {cart}</h1>
-            </div>
-            };
+            </div> :
+            <div></div>            
+            }
+        </Stack>
 
         </>
     )
