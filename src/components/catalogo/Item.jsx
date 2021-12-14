@@ -11,7 +11,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { CartContext } from '../../contexts/CartContext';
 
 
-const Item = ({id, name, price, category, image, product}) => {
+const Item = ({id, name, price, category, image}) => {
     const {onAdd} = useContext(CartContext)
     return (
         <Card sx={{ 
@@ -35,10 +35,10 @@ const Item = ({id, name, price, category, image, product}) => {
                 </CardContent>
             </Link>
                 <CardActions disableSpacing>
-                    <IconButton onClick={() => onAdd(product, 1)} aria-label="Agregar al carrito">
+                    <IconButton onClick={() => console.log("nada")} aria-label="Agregar al carrito">
                         <AddShoppingCartIcon />
                     </IconButton>
-                </CardActions>
+            </CardActions>
         </Card>
     )
 };

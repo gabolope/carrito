@@ -63,13 +63,6 @@ const ItemCount = ({ product, initial }) => {
                 </Button>               
             </div>
             {showCartIcon ? <div className="counter" color="error">
-                    {/* <Button 
-                        variant="contained" 
-                        endIcon={<DeleteIcon/>}
-                        onClick={deleteCounter}
-                    >
-                        Eliminar compra
-                    </Button> */}
                     <Link to="/Cart">
                             <Button 
                                 variant="contained" 

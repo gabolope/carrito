@@ -1,24 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { doc, getDoc, getFirestore } from '../../../node_modules/firebase/firestore';
 import ItemDetail from "./ItemDetail";
-import getProducts from '../../services/handmadePromise';
+import Loader from "../Loader";
 
 const ItemDetailContainer = () => {    
-    const [item, setItem] = useState({})
-    
+    const [product, setProduct] = useState({})
+    const [loading, setLoading] = useState(true);
+
     const { id } = useParams();
 
     useEffect(() => {
-        getProducts.then((res) => {
-            setItem(res.find((prod) => prod.id === parseInt(id)))
+        const db = getFirestore();
+
+        const itemRef = doc(db, "items", id);
+        getDoc(itemRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                setProduct({ id: snapshot.id, ...snapshot.data() })
+                setLoading(false);
+            }
         })
-        ;
-    },[id])
+    }, [])
 
-
+    if (loading) {
+        return (
+        <>
+            <Loader />
+        </>
+        );
+    }
+    
     return(
         <>
-            <ItemDetail product={item}/>
+            <ItemDetail product={product}/>
         </>
     )
 }
