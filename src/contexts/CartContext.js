@@ -27,7 +27,7 @@ export const CartProvider = ({children}) =>{
             setCartLength(quantities.reduce((a, b) => a + b))
             setshowCartIcon(true)     
         }
-    },[onAdd])
+    },[cart])
     
     //Oculta el contador
     const deleteCounter = () =>{

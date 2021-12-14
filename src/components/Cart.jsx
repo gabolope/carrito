@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
-import { doc, addDoc, collection, getFirestore, updateDoc, writeBatch } from 'firebase/firestore';
-
+import { doc, addDoc, collection, getFirestore, writeBatch } from 'firebase/firestore';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,9 +12,7 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import Stack from '@mui/material/Stack';
-import CachedIcon from '@mui/icons-material/Cached';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 
 
 
@@ -43,7 +40,6 @@ const Cart = () => {
       items: cart,
       total: "precio total"
     }
-    console.log(order);
 
     const db = getFirestore();
     const ordersCollection = collection(db, "orders");
@@ -58,23 +54,6 @@ const Cart = () => {
     })
     batch.commit()
     emptyCart()
-  }
-
-
-
-  const updateOrder = () => {
-    const db = getFirestore();
-    const batch = writeBatch(db)
-
-    cart.forEach(i => {
-      console.log("Iteración del forEach: ", i)
-      const itemRef = doc(db, "items", i.id)
-      batch.update(itemRef, {stock: i.stock - i.quantiy})
-    })
-    
-    batch.commit()
-
-    //tiene que estar ligado al onSubmit
   }
 
   return (
@@ -126,9 +105,6 @@ const Cart = () => {
             </Button>
             <Button variant="outlined" startIcon={<CheckIcon />} onClick={onSubmit}>
               Finalizar Compra
-            </Button>
-            <Button variant="outlined" startIcon={<CachedIcon />} onClick={updateOrder}>
-              Actualizar Compra
             </Button>
           </Stack> 
         </div>

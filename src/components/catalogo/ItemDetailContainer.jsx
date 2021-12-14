@@ -20,7 +20,7 @@ const ItemDetailContainer = () => {
                 setLoading(false);
             }
         })
-    }, [])
+    }, [id])
 
     if (loading) {
         return (

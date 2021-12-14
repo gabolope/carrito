@@ -22,14 +22,6 @@ const ItemDetail = ({product}) => {
                 aling="justify"
             >
                 {product.description}
-            </Typography>
-            <hr />
-            <Typography 
-                variant="body2" 
-                color="text.secondary"
-                align="center"
-            >
-                Preparación: {product.preparation}
             </Typography>              
             <ItemCount product={product} initial={1}/>       
         </Card>

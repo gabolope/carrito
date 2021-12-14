@@ -8,37 +8,43 @@ import {
 } from "../../../node_modules/firebase/firestore";
 import ItemList from "./ItemList";
 import Loader from "../Loader";
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  /* const filterTostado = () => {
-    const tostado = products.filter(
-      (i) => i.category === "Café en Grano Tostado"
-    );
-    setProducts(tostado);
-    };
+  const [filter, setFilter] = useState("");
   
-  const filterEspecialidad = () => {
-    const especialidad = products.filter(
-      (i) => i.category === "Café de Especialidad"
-    );
-    setProducts(especialidad);
-  }; */
+  const handleChange = (event) => {
+    setFilter(event.target.value);
+  };
 
+  
   useEffect(() => {
     setLoading(true);
     const db = getFirestore();
+    const itemsCollectionRef = collection(db, "items");
 
-    const itemsColllectionRef = collection(db, "items");
-    const q = query(itemsColllectionRef);
+    if (filter !== "") {
+      const firestoreFilter = where("category", "==", filter);
+      const q = query(itemsCollectionRef, firestoreFilter);
 
-    getDocs(q).then((snapshot) => {
-      setProducts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      setLoading(false);
-    });
-  }, []);
+      getDocs(q).then((snapshot) => {
+        setProducts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setLoading(false);
+      })
+    }
+    else {
+      const q = query(itemsCollectionRef);
+      
+      getDocs(q).then((snapshot) => {
+        setProducts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setLoading(false)
+      })
+    }
+  }, [filter])
+
 
   if (loading) {
     return (
@@ -48,10 +54,23 @@ const ItemListContainer = () => {
     );
   }
 
+
   return (
     <>
-      {/* <button onClick={filterTostado}>Café en Grano Tostado</button>
-      <button onClick={filterEspecialidad}>Café de Especialidad</button> */}
+      <FormControl fullWidth sx={{ m: 1 }}>
+        <NativeSelect
+          onChange={handleChange}
+          defaultValue={"Todos los productos"}
+          inputProps={{
+            name: 'filter',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={"Todos los productos"}>Todos los productos</option>
+          <option value={"Café en Grano Tostado"}>Café en Grano Tostado</option>
+          <option value={"Café de Especialidad"}>Café de Especialidad</option>
+        </NativeSelect>
+      </FormControl>
       <ItemList products={products} />
     </>
   );
