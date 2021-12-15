@@ -13,11 +13,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-
-
+import Swal from 'sweetalert2'
 
 const Cart = () => {
-  const { cart, emptyCart, isCartEmpty } = useContext(CartContext);
+  const { cart, emptyCart, isCartEmpty, cartLength, totalPrice } = useContext(CartContext);
 
   const [formFields, setFormFields] = useState({
     userName: "",
@@ -30,21 +29,27 @@ const Cart = () => {
   }
 
   const onSubmit = () => {
-    
     const order = {
       buyer: {
         name: formFields.userName,
         email: formFields.userEmail,
         address: formFields.userAddress
       },
+      time: Date(),
       items: cart,
-      total: "precio total"
+      total: {totalPrice}
     }
 
     const db = getFirestore();
     const ordersCollection = collection(db, "orders");
     addDoc(ordersCollection, order).then(({ id }) => {
-      console.log(id)
+      Swal.fire({
+        icon: 'success',
+        confirmButtonColor: '#2C061F',
+        title: '¡Gracias!',
+        text: 'Su compra fue realizada con éxito.',
+        footer: `El ID de su compra es: ${id}`
+      })
     })
 
     const batch = writeBatch(db)
@@ -53,11 +58,13 @@ const Cart = () => {
       batch.update(itemRef, {stock: i.stock - i.quantity})
     })
     batch.commit()
-    emptyCart()
+    emptyCart()  
   }
 
   return (
     <>
+    <h3>Total de productos: {cartLength}</h3>
+    <h3>Precio Total: {totalPrice}</h3>
     <h1>Tu carrito</h1>
         {isCartEmpty ? 
           <div>
@@ -93,11 +100,9 @@ const Cart = () => {
               </Table>
           </TableContainer>
           <Stack sx={{marginTop: "1rem", marginBottom: "1rem"}} direction="row" spacing={2}>
-
-              <TextField id="outlined-basic" label="Nombre" variant="outlined" value={formFields.name} name="userName" onChange={onChange}/>
-              <TextField id="outlined-basic" label="Email" variant="outlined" value={formFields.email} name="userEmail" onChange={onChange}/>
-              <TextField id="outlined-basic" label="Dirección" variant="outlined" value={formFields.address} name="userAddress" onChange={onChange}/>
-
+            <TextField id="outlined-basic" label="Nombre" variant="outlined" value={formFields.name} name="userName" onChange={onChange}/>
+            <TextField id="outlined-basic" label="Email" variant="outlined" value={formFields.email} name="userEmail" onChange={onChange}/>
+            <TextField id="outlined-basic" label="Dirección" variant="outlined" value={formFields.address} name="userAddress" onChange={onChange}/>
           </Stack>
           <Stack direction="row" spacing={2}>
             <Button variant="outlined" startIcon={<DeleteIcon />} onClick={emptyCart}>

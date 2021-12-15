@@ -7,56 +7,21 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CartWidget from './CartWidget';
-import Button from '@mui/material/Button';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import Stack from '@mui/material/Stack';
+import './NavBar.css'
 
-const NavBar = ({pageName, categories}) => {
+const NavBar = ({pageName}) => {
   return (
-    <Box 
-      sx={{ 
-        flexGrow: 1
-      }}>
-      <AppBar position="static"
-        sx={{
-          backgroundColor: "#2C061F"
-        }}
-      >
-        <Toolbar >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2}}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Link to="/">
-            <Typography 
-              variant="h5" 
-              component="div" 
-              sx={{ 
-                flexGrow: 1, 
-                fontFamily: 'Comforter',
-                letterSpacing: 4, 
-                fontWeight: 500,
-                color: "#D89216"
-                }}>
-                {pageName}
-            </Typography>
-          </Link>
-          {categories.map(category => {
-            return(
-              <Link key={category.id} to={`${category.path}`}>
-                <Button variant="text" color="inherit" >{category.name}</Button>
-              </Link>
-            )
-          })}
-          <Link to="/Cart">
-            <CartWidget/>
-          </Link>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <div className='navbar'>
+      <Link to="/" className="pageName">
+        {pageName}
+      </Link>
+      <Link to="/Cart">
+        <CartWidget/>
+      </Link>
+    </div>
   );
 }
 
