@@ -7,24 +7,6 @@ import Cart from './components/Cart'
 import NoPage from './components/NoPage';
 import { CartProvider } from './contexts/CartContext';
 
-const categories = [
-  {
-    "id":1,
-    "name":"Inicio",
-    "path":"/"
-  },
-  {
-    "id":2,
-    "name":"Productos",
-    "path":"/ItemListContainer"
-  },
-  {
-    "id":3,
-    "name":"Sobre Nosotros",
-    "path":"/About"
-  }  
-]
-
 function App() {
   return (
       <>

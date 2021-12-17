@@ -1,3 +1,2 @@
-Bienvenidos a mi Webapp Coffee Queen.
-
-Este es un sitio de práctica para el curso de React de CoderHouse.
+## Welcome to my fist E-commerce
+I developed this app while learning React Js

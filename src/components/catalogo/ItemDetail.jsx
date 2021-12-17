@@ -1,30 +1,39 @@
-import { Typography, CardMedia } from '@mui/material';
-import Card from '@mui/material/Card';
+import { Link } from 'react-router-dom';
+import Paper from '@mui/material/Paper';
 import ItemCount from './ItemCount';
+import Button from '@mui/material/Button';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import Divider from '@mui/material/Divider';
+import './ItemDetail.css'
 
-const ItemDetail = ({product}) => {
+const ItemDetail = ({ product }) => {
    return (
-        <>
-        <Card sx={{ maxWidth: 900, margin: "auto"}}>
-            <h2 className="itemDetailTittle">Detalles del Producto</h2>
-            <h3 className="itemDetailName">{product.name}</h3>
-            <CardMedia
-                component="img"
-                image={product.image}
-                alt={product.name}
-            />
-            <h4>{product.category}</h4>
-            <h3>$ {product.price}</h3>
-            <h5>Stock disponible: {product.stock}</h5>
-            <Typography 
-                variant="body1" 
-                color="text.primary"
-                aling="justify"
-            >
-                {product.description}
-            </Typography>              
-            <ItemCount product={product} initial={1}/>       
-        </Card>
+    <>
+        <div>
+            <Link to="/">
+                <Button variant="outlined" startIcon={<ArrowBackIosNewIcon />} sx={{
+                    marginTop: "1rem",
+                    marginLeft: "1rem" 
+                }}>
+                    Volver a Productos
+                </Button>
+            </Link>
+        </div>
+        <Paper elevation={3} sx={{margin:"1rem"}}>
+            <h2 className="itemNameDetail">{product.name}</h2>
+            <Divider variant="middle" />
+            <div className="detailContainer">
+                <img src={product.image} alt={product.name} className="itemImageDetail"/>
+                <div>
+                    <h4 className="itemCategoryDetail">{product.category}</h4>
+                    <div className="itemDescriptionDetail">{product.description}</div>
+                    <div className="itemStockDetail">Cantidad disponible: {product.stock} unidades.</div>
+                    <h5 className="itemPriceDetail">Precio: ${product.price} </h5>
+                    <Divider variant="middle" className="divider"/>
+                    <ItemCount product={product} initial={1}/>       
+                </div>
+            </div>
+        </Paper>
         </>
     )
 }

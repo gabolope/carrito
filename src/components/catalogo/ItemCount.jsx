@@ -38,10 +38,9 @@ const ItemCount = ({ product, initial }) => {
         }
     } //Resta uno al contador
 
-
     return (
         <>
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} justifyContent="center" sx={{marginTop: ".5rem"}}>
             <div className="itemCount"> 
                 <IconButton aria-label="Remove" onClick={removeItem}>
                     <RemoveIcon />

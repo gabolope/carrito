@@ -13,7 +13,6 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 
@@ -21,7 +20,6 @@ const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
-  const [numberOfProducts, setNumberOfProducts] = useState(0)
   
   const handleChange = (event) => {
     setFilter(event.target.value);
@@ -38,6 +36,7 @@ const ItemListContainer = () => {
       getDocs(q).then((snapshot) => {
         setProducts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         setLoading(false)
+        
       })
       
     }
@@ -53,7 +52,6 @@ const ItemListContainer = () => {
     }
   }, [filter])
 
-
   if (loading) {
     return (
       <>
@@ -66,8 +64,8 @@ const ItemListContainer = () => {
   return (
     <>
       <Stack direction="row">
-        <Box sx={{ width: 250 }}>
-          <FormControl fullWidth sx={{margin:"1rem"}}>
+        <Box sx={{ width: 600 , margin:"auto"}}>
+          <FormControl fullWidth sx={{marginTop:"1rem"}}>
             <InputLabel id="demo-simple-select-label" >Categorías</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -85,7 +83,6 @@ const ItemListContainer = () => {
             </Select>
           </FormControl>
         </Box>
-        <Chip label={numberOfProducts} variant="outlined" sx={{ minWidth: 120, maxWidth: 200, marginLeft:"3rem", marginTop:"auto", marginBottom:"auto" }}/>
       </Stack>
       <ItemList products={products} />
     </>
