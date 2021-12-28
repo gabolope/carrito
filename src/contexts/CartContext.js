@@ -18,7 +18,7 @@ export const CartProvider = ({children}) =>{
             Swal.fire({
             confirmButtonColor: '#2C061F',
             title: '¡Listo!',
-            text: `${productToAdd.quantity} producto/s  añadidos al carrito`,
+            text: `${productToAdd.quantity} producto/s  añadidos al carrito.`,
             })
         }
         else {
@@ -27,12 +27,11 @@ export const CartProvider = ({children}) =>{
             Swal.fire({
             confirmButtonColor: '#2C061F',
             title: '¡Listo!',
-            text: `${productInCart.quantity} producto/s  añadidos al carrito`,
+            text: `${productInCart.quantity} producto/s  añadidos al carrito.`,
             })
         }
     }
 
-    //Setea el largo del carrito y precio final
     useEffect(() => {
         if(cart.length > 0){
             const quantities = cart.map((i) => i.quantity)
@@ -46,13 +45,11 @@ export const CartProvider = ({children}) =>{
         }
     }, [cart])
 
-    //Vacía el carrito:
     const emptyCart = () => { 
         setCart([])
         setCartLength(0)
     }
 
-    //Elimina un producto del carrito:
     const deleteProductInCart = (name) => {
         setItemInCart(false)
         const index = cart.findIndex((i) => i.name === name)

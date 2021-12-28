@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  getFirestore,
-} from "../../../node_modules/firebase/firestore";
+import { getDocs, collection, query, where, getFirestore } from "../../../node_modules/firebase/firestore";
 import ItemList from "./ItemList";
 import Loader from "../Loader";
 import FormControl from '@mui/material/FormControl';
@@ -14,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-
 
 const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -59,7 +52,6 @@ const ItemListContainer = () => {
       </>
     );
   }
-
 
   return (
     <>

@@ -7,13 +7,11 @@ import { CartContext } from '../../contexts/CartContext'
 const CartWidget = () => {
     const {cartLength} = useContext(CartContext)
     return (
-        <>
         <IconButton color="inherit" aria-label="Shopping Cart">
             <Badge badgeContent={cartLength} color="error">
                 <ShoppingCartIcon />
             </Badge>
         </IconButton>
-        </>
     )
 }
 
