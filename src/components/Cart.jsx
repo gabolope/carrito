@@ -94,8 +94,8 @@ const Cart = () => {
                     <TableCell className="tableHead">Producto</TableCell>
                     <TableCell></TableCell>
                     <TableCell className="tableHead" align="right">Categoría</TableCell>
-                    <TableCell className="tableHead" align="right">Precio</TableCell>
                     <TableCell className="tableHead" align="right">Cantidad</TableCell>
+                    <TableCell className="tableHead" align="right">Precio</TableCell>
                     <TableCell className="tableHead" align="right"></TableCell>
                   </TableRow>
               </TableHead>

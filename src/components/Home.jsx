@@ -1,4 +1,5 @@
 import ItemListContainer from "./catalogo/ItemListContainer";
+import './Home.css'
 
 const Home = ({ greeting }) => {
   return (

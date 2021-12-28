@@ -1,13 +1,41 @@
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import ItemCount from './ItemCount';
 import Button from '@mui/material/Button';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Divider from '@mui/material/Divider';
-import './ItemDetail.css'
+import { styled } from '@mui/material/styles';
+import { Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { CartContext } from '../../contexts/CartContext';
+import './ItemDetail.css';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: -3,
+      top: 13,
+      border: `1px solid ${theme.palette.background.paper}`,
+      padding: '0 4px',
+    },
+  }));
 
 const ItemDetail = ({ product }) => {
-   return (
+    const { cart, cartLength, deleteProductInCart, itemInCart, setItemInCart } = useContext(CartContext)
+
+    const foundItemInCart = cart.find(i => product.id === i.id)
+    
+    useEffect(() => {
+        if (!foundItemInCart) {
+            setItemInCart(false)
+        }
+        else {
+            setItemInCart(true)
+        }
+    }, [foundItemInCart, setItemInCart])
+    
+    return (
     <>
         <div>
             <Link to="/">
@@ -30,7 +58,37 @@ const ItemDetail = ({ product }) => {
                     <div className="itemStockDetail">Cantidad disponible: {product.stock} unidades.</div>
                     <h5 className="itemPriceDetail">Precio: ${product.price} </h5>
                     <Divider variant="middle" className="divider"/>
-                    <ItemCount product={product} initial={1}/>       
+                    { itemInCart ? 
+                        <div>
+                            <div className='alignButtons'>
+                                    { foundItemInCart ? <h4 className='nowInCart'>Actualmente en el carrito: {foundItemInCart.quantity}.</h4> : <div></div> }
+                                <Button
+                                    endIcon={<DeleteIcon />}
+                                    onClick={() => deleteProductInCart(foundItemInCart.name)}
+                                    sx={{marginRight:"5rem"}}
+                                >
+                                    Eliminar       
+                                </Button>
+                            </div>
+                            <div className="counter" color="error">
+                                <Link to="/Cart">
+                                    <Button 
+                                        variant="contained" 
+                                            endIcon={
+                                        <StyledBadge badgeContent={cartLength} color="success">
+                                            <ShoppingCartIcon />
+                                        </StyledBadge>}
+                                    >
+                                        Ver carrito
+                                    </Button>   
+                                </Link>
+                            </div>
+                        </div>
+                        :
+                        <div>
+                            <ItemCount product={product} initial={1}/>                                     
+                        </div>
+                    }
                 </div>
             </div>
         </Paper>
